@@ -1,0 +1,37 @@
+:root {
+    --sr-green: #37594b;
+    --sr-cream: #f6f0e6;
+    --sr-maroon: #8a1c3c;
+    --sr-text: #2b2b2b;
+}
+
+body { font-family: 'Inter', sans-serif; color: var(--sr-text); background: #fffdfb; }
+
+.sr-brand, .sr-title, .sr-script { font-family: 'Caveat', cursive; color: var(--sr-green); }
+.sr-brand { font-size: 1.8rem; }
+.sr-title { line-height: 1.1; }
+.sr-line { width: 40px; border-top: 2px solid var(--sr-green); opacity: .4; }
+
+.sr-navbar { border-bottom: 1px solid #eee; background: #fff; }
+.sr-navbar .nav-link { color: #666; font-size: .9rem; }
+.sr-navbar .nav-link.active { color: var(--sr-green); font-weight: 600; }
+
+.btn-sr { background: var(--sr-green); color: #fff; border-radius: 8px; }
+.btn-sr:hover { background: #2a463a; color: #fff; }
+.btn-sr-outline { border: 1px solid var(--sr-green); color: var(--sr-green); border-radius: 8px; }
+.btn-sr-outline:hover { background: var(--sr-green); color: #fff; }
+
+.sr-hero-img { max-height: 420px; border-radius: 40% 60% 55% 45% / 45% 45% 55% 55%; object-fit: cover; }
+
+/* Katalog */
+.pill {
+    padding: 4px 16px; border: 1px solid #ccc; border-radius: 999px;
+    font-size: .85rem; color: #555; text-decoration: none;
+}
+.pill.active { background: var(--sr-green); color: #fff; border-color: var(--sr-green); }
+
+.menu-card { background: var(--sr-cream); border: 0; border-radius: 14px; overflow: hidden; }
+.menu-card img { height: 180px; object-fit: cover; background: #ddd; }
+.menu-price { color: var(--sr-maroon); font-weight: 600; }
+
+.sr-footer { background: var(--sr-cream); color: #777; font-size: .9rem; }
