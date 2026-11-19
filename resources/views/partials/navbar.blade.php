@@ -24,7 +24,15 @@
                 <a href="{{ route('login') }}" class="btn btn-sr-outline btn-sm">Masuk</a>
             @endguest
 
-            @auth
+           @auth
+                @if (auth()->user()->role !== 'admin')
+                    <a href="{{ route('keranjang.index') }}" class="btn btn-sm position-relative me-2">
+                        Keranjang
+                        @if (\App\Support\Keranjang::count() > 0)
+                            <span class="badge rounded-pill badge-cart">{{ \App\Support\Keranjang::count() }}</span>
+                        @endif
+                    </a>
+                @endif
                 <div class="dropdown">
                     <a class="btn btn-sr-outline btn-sm dropdown-toggle" href="#" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Kategori;
 use App\Models\Menu;
+use Illuminate\Support\Str;
 
 class MenuController extends Controller
 {
@@ -42,26 +43,42 @@ class MenuController extends Controller
     return view('menu.show', compact('menu', 'menuLain'));
 }
 
-public function pesan(Request $request, Menu $menu)
-{
-    $validated = $request->validate([
-        'opsi_tambahan'       => 'required|in:Sambal terpisah,Tanpa sambal',
-        'jumlah_porsi'        => 'required|integer|min:1|max:100',
-        'tanggal_pengiriman'  => 'required|date|after_or_equal:tomorrow',
-        'waktu_pengiriman'    => 'required|in:08.00-09.00 WIB,11.00-12.00 WIB,17.00-18.00 WIB',
-    ], [
-        'jumlah_porsi.min'                  => 'Minimal pesan 1 porsi.',
-        'tanggal_pengiriman.after_or_equal' => 'Pesanan minimal H-1 sebelum hari pengiriman.',
-        'tanggal_pengiriman.required'       => 'Tanggal pengiriman wajib diisi.',
-    ]);
+    public function pesan(Request $request, Menu $menu)
+    {
+        $validated = $request->validate([
+            'opsi_tambahan'      => 'required|in:Sambal terpisah,Tanpa sambal',
+            'jumlah_porsi'       => 'required|integer|min:1|max:100',
+            'tanggal_pengiriman' => 'required|date|after_or_equal:tomorrow',
+            'waktu_pengiriman'   => 'required|in:08.00-09.00 WIB,11.00-12.00 WIB,17.00-18.00 WIB',
+        ], [
+            'jumlah_porsi.min'                  => 'Minimal pesan 1 porsi.',
+            'tanggal_pengiriman.after_or_equal' => 'Pesanan minimal H-1 sebelum hari pengiriman.',
+            'tanggal_pengiriman.required'       => 'Tanggal pengiriman wajib diisi.',
+        ]);
 
-    session(['pesanan_sementara' => [
-        'menu_id'  => $menu->id,
-        'subtotal' => $menu->harga * $validated['jumlah_porsi'],
-    ] + $validated]);
+        $keranjang = session('keranjang', []);
+        $key = $menu->id . '_' . Str::slug($validated['opsi_tambahan'], '_');
 
-    return redirect()
-        ->route('menu.show', $menu)
-        ->with('success', 'Pesanan sementara tersimpan. Checkout akan aktif di tahap berikutnya.');
+        if (isset($keranjang[$key])) {
+            $keranjang[$key]['jumlah_porsi'] = min(100, $keranjang[$key]['jumlah_porsi'] + $validated['jumlah_porsi']);
+        } else {
+            $keranjang[$key] = [
+                'menu_id'       => $menu->id,
+                'opsi_tambahan' => $validated['opsi_tambahan'],
+                'jumlah_porsi'  => $validated['jumlah_porsi'],
+            ];
+        }
+
+        // Jadwal dipakai sebagai isian awal di halaman checkout
+        session([
+            'keranjang'      => $keranjang,
+            'jadwal_default' => [
+                'tanggal_pengiriman' => $validated['tanggal_pengiriman'],
+                'waktu_pengiriman'   => $validated['waktu_pengiriman'],
+            ],
+        ]);
+
+        return redirect()->route('keranjang.index')
+            ->with('success', $menu->nama_menu . ' masuk ke keranjang.');
     }
 }

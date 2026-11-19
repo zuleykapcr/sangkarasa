@@ -50,3 +50,18 @@ body { font-family: 'Inter', sans-serif; color: var(--sr-text); background: #fff
 .sr-link { color: var(--sr-green); }
 .form-control:focus { border-color: var(--sr-green); box-shadow: 0 0 0 .2rem rgba(55,89,75,.15); }
 .form-check-input:checked { background-color: var(--sr-green); border-color: var(--sr-green); }
+
+/* Keranjang */
+.cart-item { display: flex; gap: 16px; align-items: center; background: var(--sr-cream); border-radius: 14px; padding: 14px; }
+.cart-img { width: 90px; height: 90px; object-fit: cover; border-radius: 12px; }
+.badge-cart { background: var(--sr-maroon); color: #fff; font-size: .7rem; }
+
+/* Checkout */
+.co-section { background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 20px; margin-bottom: 16px; }
+.co-title { font-weight: 600; margin-bottom: 14px; }
+.co-num { display: inline-flex; width: 22px; height: 22px; align-items: center; justify-content: center;
+          background: var(--sr-green); color: #fff; border-radius: 50%; font-size: .75rem; margin-right: 6px; }
+.pay-option { display: block; border: 1px solid #ddd; border-radius: 12px; padding: 12px 14px; cursor: pointer; background: #fff; }
+.btn-check:checked + .pay-option { border-color: var(--sr-green); background: #eaf0ec; }
+.qris-box { width: 200px; height: 200px; margin: 0 auto; display: flex; align-items: center; justify-content: center;
+            background: #eee; border-radius: 12px; font-weight: 700; color: #999; }
