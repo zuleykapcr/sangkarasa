@@ -65,3 +65,25 @@ body { font-family: 'Inter', sans-serif; color: var(--sr-text); background: #fff
 .btn-check:checked + .pay-option { border-color: var(--sr-green); background: #eaf0ec; }
 .qris-box { width: 200px; height: 200px; margin: 0 auto; display: flex; align-items: center; justify-content: center;
             background: #eee; border-radius: 12px; font-weight: 700; color: #999; }
+
+/* Riwayat pesanan */
+.history-card { background: var(--sr-cream); border-radius: 14px; padding: 18px; }
+
+.badge-status { padding: 3px 12px; border-radius: 999px; font-size: .8rem; font-weight: 500; }
+.badge-tunggu  { background: #fff3cd; color: #7a5b00; }
+.badge-masak   { background: #e3efe9; color: var(--sr-green); }
+.badge-kirim   { background: #dde9f7; color: #1f4e8c; }
+.badge-selesai { background: #e0e0e0; color: #444; }
+
+.progress-steps { display: flex; justify-content: space-between; background: #fff; border-radius: 10px;
+                  padding: 12px 14px; margin-top: 14px; gap: 8px; }
+.progress-steps .step { display: flex; align-items: center; gap: 6px; font-size: .8rem; color: #aaa; }
+.progress-steps .dot { width: 10px; height: 10px; border-radius: 50%; background: #ccc; flex-shrink: 0; }
+.progress-steps .step.done { color: var(--sr-green); }
+.progress-steps .step.done .dot { background: var(--sr-green); }
+.progress-steps .step.now { color: var(--sr-green); font-weight: 600; }
+.progress-steps .step.now .dot { background: var(--sr-green); box-shadow: 0 0 0 4px rgba(55,89,75,.2); }
+
+@media (max-width: 576px) {
+    .progress-steps { flex-direction: column; }
+}

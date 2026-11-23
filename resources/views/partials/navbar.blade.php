@@ -45,7 +45,7 @@
                         @if (auth()->user()->role === 'admin')
                             <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">Dashboard admin</a></li>
                         @else
-                            <li><a class="dropdown-item" href="#">Riwayat pesanan</a></li>
+                           <li><a class="dropdown-item" href="{{ route('pesanan.index') }}">Riwayat pesanan</a></li>
                         @endif
 
                         <li>

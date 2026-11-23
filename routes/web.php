@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PesananController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\CheckoutController;
@@ -29,6 +30,11 @@ Route::middleware('guest')->group(function () {
 // ===== HARUS LOGIN =====
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    // Riwayat pesanan
+        Route::get('/pesanan', [PesananController::class, 'index'])->name('pesanan.index');
+        Route::get('/pesanan/{pesanan}', [PesananController::class, 'show'])->name('pesanan.show');
+        Route::post('/pesanan/{pesanan}/pesan-lagi', [PesananController::class, 'ulang'])->name('pesanan.ulang');
 
     // Pesan -> masuk keranjang
     Route::post('/menu/{menu}/pesan', [MenuController::class, 'pesan'])->name('menu.pesan');

@@ -22,4 +22,5 @@ return [
         'BRI'     => '5566778899',
     ],
     'atas_nama' => 'SangkaRasa Catering',
+    'whatsapp' => '6281200000000',
 ];

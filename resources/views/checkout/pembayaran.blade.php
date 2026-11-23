@@ -81,8 +81,7 @@
 
     <div class="d-flex gap-2">
         <a href="{{ route('menu.index') }}" class="btn btn-sr-outline">Pesan menu lain</a>
-        {{-- Diaktifkan di Tahap 8 --}}
-        <a href="#" class="btn btn-sr disabled">Lihat riwayat pesanan</a>
+        <a href="{{ route('pesanan.index') }}" class="btn btn-sr">Lihat riwayat pesanan</a>
     </div>
 </div>
 @endsection
