@@ -16,8 +16,10 @@
         <a class="side-link {{ request()->routeIs('menu.*') ? 'active' : '' }}"
            href="{{ route('menu.index') }}">Menu katering</a>
 
-        <a class="side-link" href="#">Cerita kami</a>
-        <a class="side-link" href="#">Cara pesan</a>
+        <a class="side-link {{ request()->routeIs('cerita') ? 'active' : '' }}"
+           href="{{ route('cerita') }}">Cerita kami</a>
+        <a class="side-link {{ request()->routeIs('cara') ? 'active' : '' }}"
+           href="{{ route('cara') }}">Cara pesan</a>
 
         @auth
            @if (auth()->user()->role === 'admin')

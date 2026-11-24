@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\HalamanController;
+use App\Http\Controllers\UlasanController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\KategoriController as AdminKategoriController;
 use App\Http\Controllers\Admin\MenuController as AdminMenuController;
@@ -21,6 +23,8 @@ Route::get('/sangkarasa', function () {
 
 Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
 Route::get('/menu/{menu}', [MenuController::class, 'show'])->name('menu.show');
+Route::get('/cerita-kami', [HalamanController::class, 'cerita'])->name('cerita');
+Route::get('/cara-pesan', [HalamanController::class, 'cara'])->name('cara');
 
 // ===== HANYA TAMU =====
 Route::middleware('guest')->group(function () {
@@ -56,6 +60,10 @@ Route::middleware('auth')->group(function () {
 
     // Instruksi pembayaran
     Route::get('/pesanan/{pesanan}/pembayaran', [CheckoutController::class, 'pembayaran'])->name('pesanan.pembayaran');
+
+        // Ulasan dan rating
+    Route::post('/menu/{menu}/ulasan', [UlasanController::class, 'store'])->name('ulasan.store');
+    Route::delete('/ulasan/{ulasan}', [UlasanController::class, 'destroy'])->name('ulasan.destroy');
 });
 
 // ===== KHUSUS ADMIN =====

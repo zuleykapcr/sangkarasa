@@ -14,7 +14,7 @@
             </p>
             <div class="d-flex gap-2 mb-3">
                 <a href="{{ route('menu.index') }}" class="btn btn-sr">Temukan menu favoritmu →</a>
-                <a href="#" class="btn btn-sr-outline">Kenalan dulu, yuk</a>
+                <a href="{{ route('cerita') }}" class="btn btn-sr-outline">Kenalan dulu, yuk</a>
             </div>
             <small class="text-muted">★★★★★ 4,9/5 dari 320+ teman makan</small>
         </div>

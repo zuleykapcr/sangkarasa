@@ -117,3 +117,26 @@ body { font-family: 'Inter', sans-serif; color: var(--sr-text); background: #fff
 .row-link:last-child { border-bottom: 0; }
 .thumb { width: 64px; height: 64px; object-fit: cover; border-radius: 10px; background: #ddd; }
 .preview-img { max-width: 220px; max-height: 160px; border-radius: 10px; object-fit: cover; }
+
+/* Rating dan ulasan */
+.stars span { color: #ddd; }
+.stars .on { color: #f0ad00; }
+
+.review-item { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; }
+
+.star-input { display: inline-flex; flex-direction: row-reverse; gap: 4px; }
+.star-input input { display: none; }
+.star-input label { font-size: 1.8rem; line-height: 1; color: #ccc; cursor: pointer; }
+.star-input input:checked ~ label,
+.star-input label:hover,
+.star-input label:hover ~ label { color: #f0ad00; }
+
+/* Finishing responsif */
+img { max-width: 100%; }
+
+@media (max-width: 576px) {
+    .cart-item { flex-wrap: wrap; }
+    .detail-banner { height: 200px; }
+    .auth-wrapper { padding: 1.5rem .75rem; }
+    .stat-num { font-size: 1.25rem; }
+}

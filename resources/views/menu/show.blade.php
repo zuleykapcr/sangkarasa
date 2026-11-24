@@ -24,7 +24,13 @@
 
             {{-- Rating masih statis. Diganti data asli di Tahap 10 (Ulasan & Rating) --}}
             <div class="small text-muted mb-3">
-                <span class="text-warning">★★★★★</span> 4,9 · Disukai pelanggan
+                @if ($menu->ulasan_count)
+                    @include('partials.bintang', ['nilai' => $menu->ulasan_avg_rating])
+                    <strong>{{ number_format($menu->ulasan_avg_rating, 1, ',', '.') }}</strong>
+                    · {{ $menu->ulasan_count }} ulasan
+                @else
+                    Belum ada ulasan
+                @endif
             </div>
 
             <p>{{ $menu->deskripsi }}</p>
@@ -101,6 +107,88 @@
         </div>
     </div>
 
+        {{-- Ulasan --}}
+    <hr class="my-5" id="ulasan">
+    <h2 class="sr-script h3 mb-3">Ulasan pelanggan</h2>
+
+    <div class="row g-4">
+        <div class="col-lg-7">
+            @forelse ($ulasan as $u)
+                <div class="review-item">
+                    <div class="d-flex justify-content-between align-items-start gap-2">
+                        <div>
+                            <div class="fw-semibold small">{{ $u->user->name }}</div>
+                            @include('partials.bintang', ['nilai' => $u->rating])
+                            <span class="small text-muted ms-1">{{ $u->tanggal->translatedFormat('j F Y') }}</span>
+                        </div>
+
+                        @auth
+                            @if (auth()->id() === $u->user_id || auth()->user()->role === 'admin')
+                                <form method="POST" action="{{ route('ulasan.destroy', $u) }}"
+                                      onsubmit="return confirm('Hapus ulasan ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-link btn-sm text-danger p-0">Hapus</button>
+                                </form>
+                            @endif
+                        @endauth
+                    </div>
+                    @if ($u->komentar)
+                        <p class="mb-0 mt-2">{{ $u->komentar }}</p>
+                    @endif
+                </div>
+            @empty
+                <p class="text-muted">Belum ada ulasan untuk menu ini.</p>
+            @endforelse
+
+            <div class="d-flex justify-content-center mt-3">{{ $ulasan->links() }}</div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="order-card">
+                @guest
+                    <strong>Tulis ulasan</strong>
+                    <p class="small text-muted mt-2 mb-3">Masuk dulu untuk menulis ulasan.</p>
+                    <a href="{{ route('login') }}" class="btn btn-sr w-100">Masuk</a>
+                @else
+                    @if ($bisaUlas)
+                        <strong>{{ $ulasanSaya ? 'Ubah ulasanmu' : 'Tulis ulasan' }}</strong>
+
+                        <form method="POST" action="{{ route('ulasan.store', $menu) }}" class="mt-3">
+                            @csrf
+
+                            <label class="form-label small fw-semibold">Rating</label>
+                            <div class="star-input mb-1">
+                                @for ($i = 5; $i >= 1; $i--)
+                                    <input type="radio" name="rating" id="bintang{{ $i }}" value="{{ $i }}"
+                                           {{ (int) old('rating', $ulasanSaya->rating ?? 0) === $i ? 'checked' : '' }}>
+                                    <label for="bintang{{ $i }}" title="{{ $i }} bintang">★</label>
+                                @endfor
+                            </div>
+                            @error('rating') <div class="text-danger small mb-2">{{ $message }}</div> @enderror
+
+                            <label class="form-label small fw-semibold mt-2">Komentar <span class="text-muted fw-normal">(opsional)</span></label>
+                            <textarea name="komentar" rows="3" maxlength="500"
+                                      class="form-control @error('komentar') is-invalid @enderror"
+                                      placeholder="Bagaimana rasanya?">{{ old('komentar', $ulasanSaya->komentar ?? '') }}</textarea>
+                            @error('komentar') <div class="invalid-feedback">{{ $message }}</div> @enderror
+
+                            <button type="submit" class="btn btn-sr w-100 mt-3">
+                                {{ $ulasanSaya ? 'Simpan perubahan' : 'Kirim ulasan' }}
+                            </button>
+                        </form>
+                    @elseif (auth()->user()->role === 'admin')
+                        <strong>Tulis ulasan</strong>
+                        <p class="small text-muted mt-2 mb-0">Akun admin tidak dapat menulis ulasan, tetapi dapat menghapus ulasan yang tidak pantas.</p>
+                    @else
+                        <strong>Tulis ulasan</strong>
+                        <p class="small text-muted mt-2 mb-0">Ulasan bisa ditulis setelah pesanan menu ini berstatus Selesai.</p>
+                    @endif
+                @endguest
+            </div>
+        </div>
+    </div>
+    
     {{-- Menu lain --}}
     @if ($menuLain->count())
         <hr class="my-5">

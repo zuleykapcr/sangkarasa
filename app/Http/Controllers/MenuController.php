@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Kategori;
 use App\Models\Menu;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class MenuController extends Controller
 {
-   public function index(Request $request)
+    public function index(Request $request)
     {
-        $query = Menu::with('kategori');
+        $query = Menu::with('kategori')
+            ->withAvg('ulasan', 'rating')
+            ->withCount('ulasan');
 
         // SEARCH
         if ($request->filled('search')) {
@@ -31,17 +33,30 @@ class MenuController extends Controller
     }
 
     public function show(Menu $menu)
-{
-    $menu->load('kategori');
+    {
+        $menu->load('kategori');
+        $menu->loadAvg('ulasan', 'rating');
+        $menu->loadCount('ulasan');
 
-    // Menu lain dari kategori yang sama
-    $menuLain = Menu::where('kategori_id', $menu->kategori_id)
-        ->where('id', '!=', $menu->id)
-        ->take(3)
-        ->get();
+        // Menu lain dari kategori yang sama
+        $menuLain = Menu::with('kategori')
+            ->withAvg('ulasan', 'rating')
+            ->withCount('ulasan')
+            ->where('kategori_id', $menu->kategori_id)
+            ->where('id', '!=', $menu->id)
+            ->take(3)
+            ->get();
 
-    return view('menu.show', compact('menu', 'menuLain'));
-}
+        // Daftar ulasan (5 per halaman)
+        $ulasan = $menu->ulasan()->with('user')->latest()->paginate(5)->fragment('ulasan');
+
+        // Siapa yang boleh menulis ulasan
+        $user       = auth()->user();
+        $bisaUlas   = $user && $user->role !== 'admin' && $menu->sudahDibeliOleh($user);
+        $ulasanSaya = $user ? $menu->ulasan()->where('user_id', $user->id)->first() : null;
+
+        return view('menu.show', compact('menu', 'menuLain', 'ulasan', 'bisaUlas', 'ulasanSaya'));
+    }
 
     public function pesan(Request $request, Menu $menu)
     {
