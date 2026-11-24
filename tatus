@@ -1,0 +1,8 @@
+[33m64187a8[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m feat: keranjang, checkout, voucher, ongkir, metode bayar, tabel pesanan dan detail
+[33m3ebfcc9[m feat: autentikasi username, register, login, logout, middleware auth dan admin
+[33m82b3c45[m feat: halaman detail menu dengan form pilih sambal, porsi, dan validasi
+[33md4101c8[m feat: katalog menu dengan search, filter kategori, dan pagination
+[33mce5a8d1[m feat: layout utama, partial navbar footer, dan halaman beranda
+[33m37eb536[m feat: migration, model, dan seeder users kategori menu
+[33mf9254dd[m feat: migration, model, dan seeder users kategori menu
+[33mdab478b[m chore: initial laravel project

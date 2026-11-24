@@ -9,16 +9,29 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
 <body>
-    @include('partials.navbar')
-      @include('partials.alert')
+    <div class="app-shell">
+        @include('partials.sidebar')
 
-    <main>
-        @yield('content')
-    </main>
+        <div class="app-content">
+            {{-- Tombol buka sidebar (layar kecil) --}}
+            <button class="btn btn-sr-outline btn-sm m-3 d-md-none" type="button" id="btnSidebar">☰ Menu</button>
 
-    @include('partials.footer')
+            @include('partials.alert')
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+            <main>
+                @yield('content')
+            </main>
+
+            @include('partials.footer')
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('btnSidebar')?.addEventListener('click', () => {
+            document.getElementById('srSidebar').classList.toggle('open');
+        });
+    </script>
     @stack('scripts')
 </body>
 </html>
