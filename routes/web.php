@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\KategoriController as AdminKategoriController;
+use App\Http\Controllers\Admin\MenuController as AdminMenuController;
+use App\Http\Controllers\Admin\PesananController as AdminPesananController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BerandaController;
@@ -56,7 +60,12 @@ Route::middleware('auth')->group(function () {
 
 // ===== KHUSUS ADMIN =====
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
+    Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+
+    Route::resource('menu', AdminMenuController::class)->except(['show']);
+    Route::resource('kategori', AdminKategoriController::class)->only(['index', 'store', 'update', 'destroy']);
+
+    Route::get('/pesanan', [AdminPesananController::class, 'index'])->name('pesanan.index');
+    Route::get('/pesanan/{pesanan}', [AdminPesananController::class, 'show'])->name('pesanan.show');
+    Route::patch('/pesanan/{pesanan}', [AdminPesananController::class, 'update'])->name('pesanan.update');
 });

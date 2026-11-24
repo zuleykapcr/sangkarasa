@@ -18,7 +18,7 @@
             <div class="col-lg-8">
                 @foreach ($items as $item)
                     <div class="cart-item mb-3">
-                        <img src="{{ asset('images/menu/' . $item['menu']->gambar) }}"
+                        <img src="{{ $item['menu']->gambar_url }}"
                              alt="{{ $item['menu']->nama_menu }}" class="cart-img">
 
                         <div class="flex-grow-1">

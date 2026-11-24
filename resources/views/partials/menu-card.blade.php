@@ -1,5 +1,5 @@
 <div class="card menu-card h-100">
-    <img src="{{ asset('images/menu/' . $menu->gambar) }}"
+    <img src="{{ $menu->gambar_url }}"
          alt="{{ $menu->nama_menu }}" class="card-img-top">
     <div class="card-body d-flex flex-column">
         <small class="text-muted">{{ $menu->kategori->nama_kategori }}</small>

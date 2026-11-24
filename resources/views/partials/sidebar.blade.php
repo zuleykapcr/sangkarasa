@@ -20,16 +20,16 @@
         <a class="side-link" href="#">Cara pesan</a>
 
         @auth
-            @if (auth()->user()->role === 'admin')
-                <a class="side-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
-                   href="{{ route('admin.dashboard') }}">Dashboard admin</a>
-                <a class="side-link {{ request()->routeIs('admin.menu.*') ? 'active' : '' }}"
-                   href="{{ route('admin.menu.index') }}">Kelola menu</a>
-                <a class="side-link {{ request()->routeIs('admin.kategori.*') ? 'active' : '' }}"
-                   href="{{ route('admin.kategori.index') }}">Kelola kategori</a>
-                <a class="side-link {{ request()->routeIs('admin.pesanan.*') ? 'active' : '' }}"
-                   href="{{ route('admin.pesanan.index') }}">Kelola pesanan</a>
-            @else
+           @if (auth()->user()->role === 'admin')
+    <a class="side-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
+       href="{{ route('admin.dashboard') }}">Dashboard admin</a>
+    <a class="side-link {{ request()->routeIs('admin.menu.*') ? 'active' : '' }}"
+       href="{{ route('admin.menu.index') }}">Kelola menu</a>
+    <a class="side-link {{ request()->routeIs('admin.kategori.*') ? 'active' : '' }}"
+       href="{{ route('admin.kategori.index') }}">Kelola kategori</a>
+    <a class="side-link {{ request()->routeIs('admin.pesanan.*') ? 'active' : '' }}"
+       href="{{ route('admin.pesanan.index') }}">Kelola pesanan</a>
+@else
                 <a class="side-link d-flex justify-content-between align-items-center {{ request()->routeIs('keranjang.*', 'checkout.*') ? 'active' : '' }}"
                    href="{{ route('keranjang.index') }}">
                     Keranjang saya

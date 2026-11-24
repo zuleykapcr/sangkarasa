@@ -108,3 +108,12 @@ body { font-family: 'Inter', sans-serif; color: var(--sr-text); background: #fff
                   transition: transform .25s; box-shadow: 4px 0 16px rgba(0,0,0,.15); }
     .sr-sidebar.open { transform: translateX(0); }
 }
+
+/* Admin */
+.stat-card { background: var(--sr-cream); border-radius: 14px; padding: 16px; }
+.stat-num { font-size: 1.5rem; font-weight: 700; color: var(--sr-green); }
+.row-link { display: flex; justify-content: space-between; align-items: center; padding: 10px 0;
+            border-bottom: 1px solid #eee; text-decoration: none; color: inherit; }
+.row-link:last-child { border-bottom: 0; }
+.thumb { width: 64px; height: 64px; object-fit: cover; border-radius: 10px; background: #ddd; }
+.preview-img { max-width: 220px; max-height: 160px; border-radius: 10px; object-fit: cover; }

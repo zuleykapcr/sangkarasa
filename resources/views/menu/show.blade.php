@@ -13,7 +13,7 @@
     </nav>
 
     {{-- Banner --}}
-    <img src="{{ asset('images/menu/' . $menu->gambar) }}"
+    <img src="{{ $menu->gambar_url }}"
          alt="{{ $menu->nama_menu }}" class="detail-banner mb-4">
 
     <div class="row g-4">

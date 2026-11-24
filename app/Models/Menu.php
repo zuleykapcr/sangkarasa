@@ -13,4 +13,18 @@ class Menu extends Model
     {
         return $this->belongsTo(Kategori::class);
     }
+
+    // Gambar hasil upload (storage) atau gambar bawaan seeder (public/images/menu)
+    public function getGambarUrlAttribute(): string
+    {
+        if (!$this->gambar) {
+            return asset('images/hero.jpg');
+        }
+
+        if (str_starts_with($this->gambar, 'menu/')) {
+            return asset('storage/' . $this->gambar);
+        }
+
+        return asset('images/menu/' . $this->gambar);
+    }
 }
